@@ -171,9 +171,14 @@ class YaleBDatasetPair(Dataset):
     def __init__(self, x, y, s, device):
         Dataset.__init__(self)
         assert x.size(0) == y.size(0)
+        
         self.x = x.to(device)
         self.y = y.to(device)
         self.s = s.to(device)
+
+        print(self.y)
+        print(self.s)
+        print("============")
 
     def __getitem__(self, index):
         x_ori = self.x[index]
@@ -183,10 +188,15 @@ class YaleBDatasetPair(Dataset):
         r = torch.randint(1, 5, size=y_ori.shape)
         cont_index = (s_ori + r) % 5 + 5 * y_ori
 
+        # print(s_ori)
+        # print(y_ori)
+        # print(r)
+        # print(cont_index)
+        # print("end")        
         x_cont = self.x[cont_index]
         s_cont = self.s[cont_index]
         y_cont = self.y[cont_index]
-
+        # print(s_cont)
         # one hot enc s label
         s_ori = F.one_hot(s_ori, num_classes=5)
         s_cont = F.one_hot(s_cont, num_classes=5)
@@ -299,9 +309,9 @@ class ExtendedYaleBDataLoader(PrivacyDataLoader):
 
                 rng_state = np.random.get_state()
                 np.random.shuffle(self.train_data)
-                np.random.set_state(rng_state)              
+                np.random.set_state(rng_state)
                 np.random.shuffle(self.train_label)
-                np.random.set_state(rng_state)              
+                np.random.set_state(rng_state)
                 np.random.shuffle(self.train_sensitive_label)
 
                 self.train_data = self.train_data[:int(self.train_label.shape[0] * args.tr_ratio), :]

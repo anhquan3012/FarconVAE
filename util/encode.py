@@ -13,6 +13,7 @@ def encode_all(args, dataset, model, xy_clf, device, is_train=True):
 
     X_tensor, s_tensor, y_tensor = torch.FloatTensor(X), torch.FloatTensor(np.array(s)), torch.FloatTensor(np.array(y))
     X_tensor, s_tensor, y_tensor = X_tensor.to(device), s_tensor.to(device), y_tensor.to(device)
+    print(X_tensor)
     model.eval()
     with torch.no_grad():
         if is_train:

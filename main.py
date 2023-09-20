@@ -220,8 +220,8 @@ if __name__ == "__main__":
         args.hidden_units = 64
         args.sensitive = 'gender_ Male'
         args.target = 'income_ >50K'
-        args.train_file_name = 'adult_train_bin.csv'
-        args.test_file_name = 'adult_test_bin.csv'
+        args.train_file_name = 'adult_train_bin.csv' # 'adult_train_bin.csv' # 
+        args.test_file_name = 'adult_test_bin.csv' # 'adult_test_bin.csv' # 
         args.encoder = 'mlp'
         args.batch_size = 30162
         args.batch_size_te = 15060
@@ -238,9 +238,10 @@ if __name__ == "__main__":
         args.dec_seq = 'fa'
         args.pred_act = 'leaky'
         args.pred_seq = 'fba' if args.kernel == 't' else 'fad'
-        args.model_path = './model_adult'
+        args.model_path = './model_adult_4Sep'
+        # args.model_file = "farcon_2023_08_04_16_41_57_439550_ours.pth"
         args.data_path = './data/adult/'
-        args.result_path = './result_adult'
+        args.result_path = './result_adult_4Sep'
         args.clf_path = './bestclf/bestclf_adult.pth'
     elif args.data_name == 'german':
         args.y_dim = 1
@@ -267,6 +268,7 @@ if __name__ == "__main__":
         args.enc_seq = 'fa'
         args.dec_seq = 'fa'
         args.pred_act = 'leaky'
+        
         args.pred_seq = 'fba'
         args.model_path = './model_german'
         args.data_path = './data/german/'

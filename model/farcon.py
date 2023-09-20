@@ -6,10 +6,10 @@ class FarconVAE(nn.Module):
         super(FarconVAE, self).__init__()
         input_dim = args.n_features + args.s_dim + args.y_dim
         if args.encoder == 'mlp':
-            self.encoder = Encoder(input_dim, 2 * args.latent_dim, args.hidden_units, args)
+            self.encoder = Encoder(input_dim-1, 2 * args.latent_dim, args.hidden_units, args)
             self.decoder = Decoder(2 * args.latent_dim, args.n_features + args.s_dim, args.hidden_units, args)
         else:
-            self.encoder = Encoder_One(input_dim, 2 * args.latent_dim, args)
+            self.encoder = Encoder_One(input_dim-1, 2 * args.latent_dim, args)
             self.decoder = Decoder_One(2 * args.latent_dim, args.n_features + args.s_dim, args)
         
         self.predictor = OneLinearLayer(args.latent_dim, args.y_dim)
@@ -20,7 +20,8 @@ class FarconVAE(nn.Module):
     def encode(self, x, s, y, input_label=False, return_z=False):
         if input_label:
             y = F.one_hot(y.to(torch.int64), num_classes=38)
-        model_input = torch.cat((x, s, y), dim=1)
+        # model_input = torch.cat((x, s, y), dim=1)
+        model_input = torch.cat((x, s), dim=1)
 
         out1, out2 = self.encoder(model_input)
         (mu_x, mu_s, logvar_x, logvar_s) = out1[:, :self.args.latent_dim], out1[:, self.args.latent_dim:], \
